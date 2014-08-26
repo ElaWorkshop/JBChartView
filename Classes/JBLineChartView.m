@@ -164,7 +164,6 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
 - (void)construct;
 
 // View quick accessors
-- (CGFloat)normalizedHeightForRawHeight:(CGFloat)rawHeight;
 - (CGFloat)availableHeight;
 - (CGFloat)padding;
 - (NSUInteger)dataCount;
@@ -277,8 +276,7 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
                 CGFloat rawHeight =  [self.delegate lineChartView:self verticalValueForHorizontalIndex:horizontalIndex atLineIndex:lineIndex];
                 NSAssert(rawHeight >= 0, @"JBLineChartView // delegate function - (CGFloat)lineChartView:(JBLineChartView *)lineChartView verticalValueForHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex must return a CGFloat >= 0");
 
-                CGFloat normalizedHeight = [self normalizedHeightForRawHeight:rawHeight];
-                yOffset = mainViewRect.size.height - normalizedHeight;
+                yOffset = rawHeight;
                 
                 JBLineChartPoint *chartPoint = [[JBLineChartPoint alloc] init];
                 chartPoint.position = CGPointMake(xOffset, yOffset);
@@ -394,19 +392,6 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
 }
 
 #pragma mark - View Quick Accessors
-
-- (CGFloat)normalizedHeightForRawHeight:(CGFloat)rawHeight
-{
-    CGFloat minHeight = [self minimumValue];
-    CGFloat maxHeight = [self maximumValue];
-
-    if ((maxHeight - minHeight) <= 0)
-    {
-        return 0;
-    }
-
-    return ((rawHeight - minHeight) / (maxHeight - minHeight)) * [self availableHeight];
-}
 
 - (CGFloat)availableHeight
 {
