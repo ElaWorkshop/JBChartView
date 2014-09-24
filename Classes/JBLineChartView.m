@@ -276,7 +276,7 @@ static UIColor *kJBLineChartViewDefaultDotSelectionColor = nil;
                 CGFloat rawHeight =  [self.delegate lineChartView:self verticalValueForHorizontalIndex:horizontalIndex atLineIndex:lineIndex];
                 NSAssert(rawHeight >= 0, @"JBLineChartView // delegate function - (CGFloat)lineChartView:(JBLineChartView *)lineChartView verticalValueForHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex must return a CGFloat >= 0");
 
-                yOffset = rawHeight;
+                yOffset = self.bounds.size.height - 28.0f - rawHeight;
                 
                 JBLineChartPoint *chartPoint = [[JBLineChartPoint alloc] init];
                 chartPoint.position = CGPointMake(xOffset, yOffset);
